@@ -1,4 +1,4 @@
-package com.br.ent.restspringbootudemy;
+package com.br.ent.restspringbootudemy.models;
 
 public class Greeting {
 	private final long id;
