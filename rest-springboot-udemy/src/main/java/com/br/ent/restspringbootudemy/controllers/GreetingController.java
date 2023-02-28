@@ -1,4 +1,4 @@
-package com.br.ent.restspringbootudemy;
+package com.br.ent.restspringbootudemy.controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.br.ent.restspringbootudemy.Greeting;
 
 @RestController
 public class GreetingController {

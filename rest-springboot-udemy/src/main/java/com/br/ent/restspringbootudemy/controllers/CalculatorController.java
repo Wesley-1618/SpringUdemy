@@ -1,10 +1,11 @@
-package com.br.ent.restspringbootudemy.calculadora;
+package com.br.ent.restspringbootudemy.controllers;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.ent.restspringbootudemy.calculadora.MathOperations;
 import com.br.ent.restspringbootudemy.utils.NumberUtils;
 
 @RestController
