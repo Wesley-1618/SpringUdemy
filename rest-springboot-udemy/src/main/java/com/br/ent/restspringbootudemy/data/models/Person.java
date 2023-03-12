@@ -1,4 +1,4 @@
-package com.br.ent.restspringbootudemy.models;
+package com.br.ent.restspringbootudemy.data.models;
 
 import java.io.Serializable;
 

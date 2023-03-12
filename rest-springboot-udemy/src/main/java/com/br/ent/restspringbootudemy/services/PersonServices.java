@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.br.ent.restspringbootudemy.models.Person;
+import com.br.ent.restspringbootudemy.converter.DozerConverter;
+import com.br.ent.restspringbootudemy.data.dtos.PersonDTO;
+import com.br.ent.restspringbootudemy.data.models.Person;
 import com.br.ent.restspringbootudemy.repository.PersonRepository;
 
 @Service
@@ -13,12 +15,14 @@ public class PersonServices {
 	@Autowired
 	PersonRepository repository;
 	
-	public Person create(Person person) {
-		return repository.save(person);
+	public PersonDTO create(PersonDTO person) {
+		var entity = DozerConverter.parseObject(person, Person.class);
+		var vo = DozerConverter.parseObject(repository.save(entity), PersonDTO.class);
+		return vo;
 	}
 	
-	public Person update(Person person) {
-		Person entity = new Person();
+	public PersonDTO update(PersonDTO person) {
+		PersonDTO entity = new PersonDTO();
 		entity.setFirstName(person.getFirstName());
 		entity.setLastName(person.getLastName());
 		entity.setAdress(person.getAdress());
@@ -31,11 +35,13 @@ public class PersonServices {
 		repository.delete(person);
 	}
 	
-	public Person findById(Long id) {
-		return repository.findById(id).orElseThrow() ;
+	public PersonDTO findById(Long id) {
+		var dto = DozerConverter.parseObject(repository.findById(id).orElseThrow(), PersonDTO.class);
+		return  dto;
 	}
 	
-	public List<Person> findAll() {
-		return repository.findAll();
+	public List<PersonDTO> findAll() {
+		var dtoList = DozerConverter.parseListObjects(repository.findAll(), PersonDTO.class);
+		return dtoList;
 	}
 }
