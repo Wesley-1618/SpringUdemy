@@ -3,6 +3,7 @@ package com.br.ent.restspringbootudemy.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,27 +25,30 @@ public class PersonController {
 	private PersonServices personServ;
 	
 
-	@GetMapping
+	@GetMapping( produces = { "application/json", "application/xml" })
 	public List<PersonDTO> findAll() {
 		return personServ.findAll();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping(value = "/{id}",  produces = { "application/json", "application/xml" })
 	public PersonDTO findById(@PathVariable("id") Long id) {
 		return personServ.findById(id);
 	}
 	
-	@PostMapping
+	@PostMapping( produces = { "application/json", "application/xml" },
+			consumes = {"application/json", "application/xml"})
 	public PersonDTO create(@RequestBody PersonDTO person) {
 		return personServ.create(person);
 	}
 	
-	@PostMapping("/v2")
+	@PostMapping(value="/v2", produces = { "application/json", "application/xml" },
+			consumes = {"application/json", "application/xml"})
 	public PersonDTOV2 createV2(@RequestBody PersonDTOV2 person) {
 		return personServ.createV2(person);
 	}
 	
-	@PutMapping
+	@PutMapping( produces = { "application/json", "application/xml" },
+			consumes = {"application/json", "application/xml"})
 	public PersonDTO update(@RequestBody PersonDTO person) {
 		return personServ.update(person);
 	}
