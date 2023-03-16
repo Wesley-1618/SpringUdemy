@@ -18,7 +18,7 @@ import com.br.ent.restspringbootudemy.data.dtos2.PersonDTOV2;
 import com.br.ent.restspringbootudemy.services.PersonServices;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person")
 public class PersonController {
 	@Autowired
 	private PersonServices personServ;
@@ -39,7 +39,7 @@ public class PersonController {
 		return personServ.create(person);
 	}
 	
-	@PostMapping("/V2")
+	@PostMapping("/v2")
 	public PersonDTOV2 createV2(@RequestBody PersonDTOV2 person) {
 		return personServ.createV2(person);
 	}

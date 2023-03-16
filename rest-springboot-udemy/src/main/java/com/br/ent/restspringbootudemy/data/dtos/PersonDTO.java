@@ -1,10 +1,20 @@
 package com.br.ent.restspringbootudemy.data.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"id","lastName","firstName","adress"})
 public class PersonDTO {
+
 	private Long id;
+	@JsonProperty("primeiro_nome")
 	private String firstName;
+	@JsonProperty("ultimo_nome")
 	private String lastName;
+	@JsonProperty("endereco")
 	private String adress;
+	@JsonIgnore
 	private String gender;
 	
 	public Long getId() {
