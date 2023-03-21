@@ -1,5 +1,7 @@
 package com.br.ent.restspringbootudemy.controllers;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,36 +25,44 @@ import com.br.ent.restspringbootudemy.services.PersonServices;
 public class PersonController {
 	@Autowired
 	private PersonServices personServ;
-	
 
-	@GetMapping( produces = { "application/json", "application/xml", "application/x-yaml"})
+	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonDTO> findAll() {
-		return personServ.findAll();
+		List<PersonDTO> persons = personServ.findAll();
+		persons.stream()
+				.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+		return persons;
 	}
-	
-	@GetMapping(value = "/{id}",  produces = { "application/json", "application/xml", "application/x-yaml" })
+
+	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonDTO findById(@PathVariable("id") Long id) {
-		return personServ.findById(id);
+		PersonDTO personDTO = personServ.findById(id);
+		personDTO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		return personDTO;
 	}
-	
-	@PostMapping( produces = { "application/json", "application/xml", "application/x-yaml" },
-			consumes = {"application/json", "application/xml", "application/x-yaml"})
+
+	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	public PersonDTO create(@RequestBody PersonDTO person) {
-		return personServ.create(person);
+		PersonDTO personDTO = personServ.create(person);
+		personDTO.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+		return personDTO;
 	}
-	
-	@PostMapping(value="/v2", produces = { "application/json", "application/xml", "application/x-yaml" },
-			consumes = {"application/json", "application/xml", "application/x-yaml"})
+
+	@PostMapping(value = "/v2", produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	public PersonDTOV2 createV2(@RequestBody PersonDTOV2 person) {
 		return personServ.createV2(person);
 	}
-	
-	@PutMapping( produces = { "application/json", "application/xml", "application/x-yaml" },
-			consumes = {"application/json", "application/xml", "application/x-yaml"})
+
+	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	public PersonDTO update(@RequestBody PersonDTO person) {
-		return personServ.update(person);
+		PersonDTO personDTO = personServ.update(person);
+		personDTO.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+		return personDTO;
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		personServ.delete(id);

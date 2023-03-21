@@ -1,13 +1,20 @@
 package com.br.ent.restspringbootudemy.data.dtos;
 
+import java.util.Objects;
+
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.github.dozermapper.core.Mapping;
 
 @JsonPropertyOrder({"id","lastName","firstName","adress"})
-public class PersonDTO {
+public class PersonDTO extends RepresentationModel<PersonDTO>{
 
-	private Long id;
+	@Mapping("id")
+	@JsonProperty("id")
+	private Long key;
 	@JsonProperty("primeiro_nome")
 	private String firstName;
 	@JsonProperty("ultimo_nome")
@@ -17,11 +24,11 @@ public class PersonDTO {
 	@JsonIgnore
 	private String gender;
 	
-	public Long getId() {
-		return id;
+	public Long getKey() {
+		return key;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(Long key) {
+		this.key = key;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -46,5 +53,25 @@ public class PersonDTO {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(adress, firstName, gender, key, lastName);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PersonDTO other = (PersonDTO) obj;
+		return Objects.equals(adress, other.adress) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(gender, other.gender) && Objects.equals(key, other.key)
+				&& Objects.equals(lastName, other.lastName);
 	}
 }
