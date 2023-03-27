@@ -20,12 +20,17 @@ import com.br.ent.restspringbootudemy.data.dtos.PersonDTO;
 import com.br.ent.restspringbootudemy.data.dtos2.PersonDTOV2;
 import com.br.ent.restspringbootudemy.services.PersonServices;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "Person Routes", description = "Description for Persons", tags = {"Person Routes"})
 @RestController
 @RequestMapping("/api/person")
 public class PersonController {
 	@Autowired
 	private PersonServices personServ;
-
+	
+	@ApiOperation(value="Find all peoples recorded")
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonDTO> findAll() {
 		List<PersonDTO> persons = personServ.findAll();
@@ -33,7 +38,8 @@ public class PersonController {
 				.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
 		return persons;
 	}
-
+	
+	@ApiOperation(value = "Find People With id")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonDTO findById(@PathVariable("id") Long id) {
 		PersonDTO personDTO = personServ.findById(id);
@@ -41,6 +47,7 @@ public class PersonController {
 		return personDTO;
 	}
 
+	@ApiOperation(value = "Create One New People")
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
 	public PersonDTO create(@RequestBody PersonDTO person) {
@@ -48,13 +55,15 @@ public class PersonController {
 		personDTO.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
 		return personDTO;
 	}
-
+	
+	@ApiOperation(value = "Create People on New Version of Endpoint for Peoples")
 	@PostMapping(value = "/v2", produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
 	public PersonDTOV2 createV2(@RequestBody PersonDTOV2 person) {
 		return personServ.createV2(person);
 	}
-
+	
+	@ApiOperation(value = "Update One People of Database")
 	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
 	public PersonDTO update(@RequestBody PersonDTO person) {
@@ -62,7 +71,8 @@ public class PersonController {
 		personDTO.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
 		return personDTO;
 	}
-
+	
+	@ApiOperation(value = "Delete One People Passing If For Reference Search the Id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		personServ.delete(id);
