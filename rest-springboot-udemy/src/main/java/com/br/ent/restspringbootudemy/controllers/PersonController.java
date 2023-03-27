@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.br.ent.restspringbootudemy.services.PersonServices;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+//@CrossOrigin
 @Api(value = "Person Routes", description = "Description for Persons", tags = {"Person Routes"})
 @RestController
 @RequestMapping("/api/person")
@@ -30,6 +32,7 @@ public class PersonController {
 	@Autowired
 	private PersonServices personServ;
 	
+//	@CrossOrigin(origins="htpp://localhost:8080")
 	@ApiOperation(value="Find all peoples recorded")
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonDTO> findAll() {
@@ -39,6 +42,7 @@ public class PersonController {
 		return persons;
 	}
 	
+//	@CrossOrigin(origins={"htpp://localhost:8080","localhost"})
 	@ApiOperation(value = "Find People With id")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonDTO findById(@PathVariable("id") Long id) {
