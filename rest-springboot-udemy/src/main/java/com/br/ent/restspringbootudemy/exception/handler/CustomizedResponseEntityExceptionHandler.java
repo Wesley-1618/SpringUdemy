@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.br.ent.restspringbootudemy.exception.ExceptionResponse;
+import com.br.ent.restspringbootudemy.exception.InvalidJwtAuthenticationException;
 import com.br.ent.restspringbootudemy.exception.UnsuportedMathOperationException;
 
 @ControllerAdvice
@@ -25,6 +26,12 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	
 	@ExceptionHandler(UnsuportedMathOperationException.class)
 	public final ResponseEntity<ExceptionResponse> handleBadExceptions(Exception ex, WebRequest request){
+		ExceptionResponse exRespo = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<>(exRespo, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(InvalidJwtAuthenticationException.class)
+	public final ResponseEntity<ExceptionResponse> invalidJwtAuthenticationException(Exception ex, WebRequest request){
 		ExceptionResponse exRespo = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(exRespo, HttpStatus.BAD_REQUEST);
 	}

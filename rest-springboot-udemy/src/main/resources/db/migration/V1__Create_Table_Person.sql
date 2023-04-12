@@ -1,4 +1,4 @@
-CREATE TABLE public.person (
+CREATE TABLE IF NOT EXISTS public.person (
 	id bigserial NOT NULL,
 	adress varchar(100) NOT NULL,
 	first_name varchar(80) NOT NULL,

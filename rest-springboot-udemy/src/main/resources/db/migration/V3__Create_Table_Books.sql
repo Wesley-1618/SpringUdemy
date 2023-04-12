@@ -1,4 +1,4 @@
-﻿CREATE TABLE public.books (
+﻿CREATE TABLE IF NOT EXISTS public.books (
   id bigserial NOT NULL,
   author varchar(100) NOT NULL,
   launch_date date NOT NULL,
