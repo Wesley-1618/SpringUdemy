@@ -1,6 +1,7 @@
 package com.br.ent.restspringbootudemy.data.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,9 @@ public class Person implements Serializable{
 	
 	@Column(nullable = false, length = 6)
 	private String gender;
+	
+	@Column(nullable = false)
+	private Boolean enabled;
 	
 	public Long getId() {
 		return id;
@@ -62,6 +66,12 @@ public class Person implements Serializable{
 		this.gender = gender;
 	}
 	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 	public Person(Long id, String firstName, String lastName, String adress, String gender) {
 		super();
 		this.id = id;
@@ -74,4 +84,22 @@ public class Person implements Serializable{
 	public Person() {
 		super();
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(adress, enabled, firstName, gender, id, lastName);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		return Objects.equals(adress, other.adress) && Objects.equals(enabled, other.enabled)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(gender, other.gender)
+				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName);
+	}
+	
 }

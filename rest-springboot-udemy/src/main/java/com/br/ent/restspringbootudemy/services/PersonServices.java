@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.br.ent.restspringbootudemy.converter.DozerConverter;
 import com.br.ent.restspringbootudemy.converter.custom.PersonConverter;
@@ -39,6 +40,13 @@ public class PersonServices {
 		entity.setAdress(person.getAdress());
 		entity.setGender(person.getGender());
 		return entity;
+	}
+	
+	@Transactional
+	public PersonDTO disablePerson(Long id) {
+		repository.disablePerson(id);
+		var dto = DozerConverter.parseObject(repository.findById(id).orElseThrow(), PersonDTO.class);
+		return  dto;
 	}
 	
 	public void delete(Long id) {

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -73,6 +74,14 @@ public class PersonController {
 	public PersonDTO update(@RequestBody PersonDTO person) {
 		PersonDTO personDTO = personServ.update(person);
 		personDTO.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+		return personDTO;
+	}
+	
+	@ApiOperation(value = "Disable a specific person by your ID")
+	@PatchMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
+	public PersonDTO disablePerson(@PathVariable("id") Long id) {
+		PersonDTO personDTO = personServ.disablePerson(id);
+		personDTO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
 		return personDTO;
 	}
 	

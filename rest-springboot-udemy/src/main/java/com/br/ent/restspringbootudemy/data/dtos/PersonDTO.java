@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({"id","lastName","firstName","adress"})
+@JsonPropertyOrder({"id","lastName","firstName","adress","enabled"})
 public class PersonDTO extends RepresentationModel<PersonDTO>{
 
 	@Mapping("id")
@@ -23,6 +23,8 @@ public class PersonDTO extends RepresentationModel<PersonDTO>{
 	private String adress;
 	@JsonIgnore
 	private String gender;
+	@JsonProperty("ativo")
+	private Boolean enabled;
 	
 	public Long getKey() {
 		return key;
@@ -54,11 +56,18 @@ public class PersonDTO extends RepresentationModel<PersonDTO>{
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(adress, firstName, gender, key, lastName);
+		result = prime * result + Objects.hash(adress, enabled, firstName, gender, key, lastName);
 		return result;
 	}
 	@Override
@@ -70,8 +79,9 @@ public class PersonDTO extends RepresentationModel<PersonDTO>{
 		if (getClass() != obj.getClass())
 			return false;
 		PersonDTO other = (PersonDTO) obj;
-		return Objects.equals(adress, other.adress) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(gender, other.gender) && Objects.equals(key, other.key)
-				&& Objects.equals(lastName, other.lastName);
+		return Objects.equals(adress, other.adress) && Objects.equals(enabled, other.enabled)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(gender, other.gender)
+				&& Objects.equals(key, other.key) && Objects.equals(lastName, other.lastName);
 	}
+	
 }
