@@ -18,8 +18,10 @@ import com.br.ent.restspringbootudemy.repository.UserRepository;
 import com.br.ent.restspringbootudemy.security.AccountCredentialsDTO;
 import com.br.ent.restspringbootudemy.security.jwt.JwtTokenProvider;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+@Api(tags="AuthenticationEndpoint")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
