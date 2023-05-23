@@ -1,0 +1,13 @@
+docker-compose up -d --build   ## Para subir o docker e builda-lo
+
+docker-compose down ## Para finalizar os containers
+
+docker ps ## Verfica o status dos containers
+
+docker logs +containerid  ## verifica o log do container com o id passado
+
+docker images ## para ver as imagens que estão disponiveis 
+
+docker login docker.io ## faz login no dockerhub a fim de fazer upload das imagens
+
+docker push +imagename ## para subir o container no repositorio do docker hub
